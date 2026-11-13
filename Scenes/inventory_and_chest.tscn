@@ -1,0 +1,191 @@
+[gd_scene load_steps=10 format=3 uid="uid://dkc4no6bvghy2"]
+
+[ext_resource type="Script" uid="uid://dy7u7cyxhp3fv" path="res://Scripts/inventory.gd" id="1_6e6p8"]
+[ext_resource type="Script" uid="uid://rpdwn1jp42tj" path="res://Scripts/connected_inventories.gd" id="1_64f20"]
+[ext_resource type="Texture2D" uid="uid://d116ox53s57ar" path="res://Visuals/Images/panel_bg.png" id="1_drp1n"]
+[ext_resource type="Resource" uid="uid://ywyxgrms4ipy" path="res://Scripts/Resources/Inventory/player_inventory.tres" id="2_qc8kq"]
+[ext_resource type="Resource" uid="uid://c6pw387winvvu" path="res://Scripts/Resources/Inventory/test_chest_inventory.tres" id="3_b3pnq"]
+[ext_resource type="FontFile" uid="uid://u4o4tfvnmq87" path="res://Visuals/Fonts/Montserrat-Medium.ttf" id="3_dygbw"]
+[ext_resource type="PackedScene" uid="uid://bflhyab0mcpnt" path="res://Scenes/inventory_slot.tscn" id="4_ov4wf"]
+[ext_resource type="Resource" uid="uid://qiyiyydph4y1" path="res://Scripts/Resources/Items/nerdle.tres" id="5_r2qh1"]
+[ext_resource type="Resource" uid="uid://r6abn6dw57bd" path="res://Scripts/Resources/Items/circle.tres" id="7_e1ipv"]
+
+[node name="InventoryAndChest" type="Control" node_paths=PackedStringArray("connected_inventories")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_64f20")
+connected_inventories = [NodePath("HBoxContainer/InventoryItems"), NodePath("HBoxContainer/ChestItems")]
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 0
+offset_right = 1150.0
+offset_bottom = 646.0
+texture = ExtResource("1_drp1n")
+region_rect = Rect2(-6, -6, 28, 28)
+patch_margin_left = 9
+patch_margin_top = 9
+patch_margin_right = 9
+patch_margin_bottom = 9
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 69.0
+offset_right = -15.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="InventoryItems" type="Control" parent="HBoxContainer" node_paths=PackedStringArray("item_grid", "grabbed_slot_display", "scroll_area")]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("1_6e6p8")
+inventory_data = ExtResource("2_qc8kq")
+item_grid = NodePath("InventoryScroll/InventoryItemGrid")
+item_slot_template = ExtResource("4_ov4wf")
+grabbed_slot_display = NodePath("../../InventoryGrabbedItem")
+scroll_area = NodePath("InventoryItemsBG")
+item_type = ExtResource("5_r2qh1")
+
+[node name="InventoryItemsBG" type="NinePatchRect" parent="HBoxContainer/InventoryItems"]
+self_modulate = Color(0.960784, 0.741176, 0.352941, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+texture = ExtResource("1_drp1n")
+region_rect = Rect2(-6, -6, 28, 28)
+patch_margin_left = 9
+patch_margin_top = 9
+patch_margin_right = 9
+patch_margin_bottom = 9
+
+[node name="InventoryScroll" type="ScrollContainer" parent="HBoxContainer/InventoryItems"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 9.0
+offset_right = -9.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+scroll_vertical_custom_step = 20.0
+
+[node name="InventoryItemGrid" type="GridContainer" parent="HBoxContainer/InventoryItems/InventoryScroll"]
+layout_mode = 2
+columns = 5
+
+[node name="ChestItems" type="Control" parent="HBoxContainer" node_paths=PackedStringArray("item_grid", "grabbed_slot_display", "scroll_area")]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("1_6e6p8")
+inventory_data = ExtResource("3_b3pnq")
+item_grid = NodePath("ChestScroll/ChestItemGrid")
+item_slot_template = ExtResource("4_ov4wf")
+grabbed_slot_display = NodePath("../../ChestGrabbedItem")
+scroll_area = NodePath("ChestItemsBG")
+item_type = ExtResource("7_e1ipv")
+
+[node name="ChestItemsBG" type="NinePatchRect" parent="HBoxContainer/ChestItems"]
+self_modulate = Color(0.960685, 0.739894, 0.351659, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+texture = ExtResource("1_drp1n")
+region_rect = Rect2(-6, -6, 28, 28)
+patch_margin_left = 9
+patch_margin_top = 9
+patch_margin_right = 9
+patch_margin_bottom = 9
+
+[node name="ChestScroll" type="ScrollContainer" parent="HBoxContainer/ChestItems"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 9.0
+offset_right = -9.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+scroll_vertical_custom_step = 20.0
+
+[node name="ChestItemGrid" type="GridContainer" parent="HBoxContainer/ChestItems/ChestScroll"]
+layout_mode = 2
+columns = 5
+
+[node name="InventoryLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 148.0
+offset_top = 12.0
+offset_right = -719.0
+offset_bottom = -583.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("3_dygbw")
+theme_override_font_sizes/normal_font_size = 45
+text = "INVENTORY"
+scroll_active = false
+
+[node name="ChestLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 788.0
+offset_top = 12.0
+offset_right = -208.0
+offset_bottom = -583.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("3_dygbw")
+theme_override_font_sizes/normal_font_size = 45
+text = "CHEST"
+scroll_active = false
+
+[node name="InventoryGrabbedItem" parent="." instance=ExtResource("4_ov4wf")]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 100.0
+offset_bottom = 100.0
+mouse_filter = 2
+
+[node name="ChestGrabbedItem" parent="." instance=ExtResource("4_ov4wf")]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 100.0
+offset_bottom = 100.0
+mouse_filter = 2
+
+[connection signal="on_inventory_hovered" from="HBoxContainer/InventoryItems" to="." method="_on_inventory_hovered"]
+[connection signal="on_inventory_hovered" from="HBoxContainer/ChestItems" to="." method="_on_inventory_hovered"]

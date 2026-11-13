@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6kygldbknx8u"]
+
+[ext_resource type="Script" uid="uid://btlo8qx1gusy7" path="res://Scripts/random_math.gd" id="1_1jb42"]
+
+[node name="Math" type="Node"]
+script = ExtResource("1_1jb42")
+numbers = Array[int]([58, 70, 63, 65, 52, 58, 42, 65, 72, 61, 59, 51, 47, 78, 46, 55, 55, 59, 53, 58, 47, 50, 50, 43, 51, 50, 45, 60, 72, 58, 55, 48, 65, 53, 73, 62, 55, 61, 58, 58, 49, 48, 65, 63, 55])

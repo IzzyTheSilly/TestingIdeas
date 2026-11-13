@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://bo3826reaul62"]
+
+[ext_resource type="Script" uid="uid://ds2gho07dtaru" path="res://Scripts/world_item.gd" id="1_5q8hq"]
+[ext_resource type="Resource" uid="uid://r6abn6dw57bd" path="res://Scripts/Resources/Items/circle.tres" id="2_seulj"]
+[ext_resource type="Resource" uid="uid://ywyxgrms4ipy" path="res://Scripts/Resources/Inventory/player_inventory.tres" id="3_l78dl"]
+[ext_resource type="Texture2D" uid="uid://cgyseinjn5fr7" path="res://Visuals/Images/Rad-Circle-3.png" id="3_tgwmn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q0mib"]
+radius = 46.0109
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nlwsg"]
+
+[node name="WorldItem" type="Node2D"]
+script = ExtResource("1_5q8hq")
+item_template = ExtResource("2_seulj")
+player_inventory = ExtResource("3_l78dl")
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("CircleShape2D_q0mib")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(4.17233e-07, -5.66244e-07)
+scale = Vector2(0.032, 0.032)
+texture = ExtResource("3_tgwmn")
+
+[node name="CollideArea" type="RigidBody2D" parent="."]
+collision_layer = 2
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollideArea"]
+shape = SubResource("RectangleShape2D_nlwsg")
+
+[connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]
+[connection signal="body_exited" from="PickupArea" to="." method="_on_pickup_area_body_exited"]

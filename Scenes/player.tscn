@@ -1,0 +1,69 @@
+[gd_scene load_steps=10 format=3 uid="uid://d337ndmy08g1e"]
+
+[ext_resource type="Texture2D" uid="uid://owcxhcejkalp" path="res://Visuals/Images/pfp thingy2.png" id="1_3kpvk"]
+[ext_resource type="Script" uid="uid://bfxgdc5e4uki2" path="res://Scripts/player.gd" id="1_xqgl3"]
+[ext_resource type="Script" uid="uid://cg27e8dckb775" path="res://Scripts/hurtbox.gd" id="3_igsks"]
+[ext_resource type="Script" uid="uid://dprhbcctq2w0k" path="res://Scripts/health.gd" id="4_3ordx"]
+[ext_resource type="Script" uid="uid://bisigd426msbv" path="res://Scripts/collector.gd" id="5_041nv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k5q18"]
+size = Vector2(15.9, 15.9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2fw44"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y656e"]
+size = Vector2(16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fkybt"]
+
+[node name="Player" type="CharacterBody2D"]
+editor_description = "i liek fire truk and monsetr truck"
+collision_mask = 6
+script = ExtResource("1_xqgl3")
+wall_friction = 5.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_k5q18")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(2.98023e-07, 2.98023e-07)
+scale = Vector2(0.0625, 0.0625)
+texture = ExtResource("1_3kpvk")
+region_rect = Rect2(-50, -20, 420, 300)
+
+[node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("3_igsks")
+health = NodePath("../Health")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_2fw44")
+
+[node name="Health" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_3ordx")
+max_health = 1
+
+[node name="Collector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("5_041nv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collector"]
+shape = SubResource("RectangleShape2D_y656e")
+
+[node name="InteractionBox" type="Area2D" parent="."]
+collision_layer = 256
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionBox"]
+shape = SubResource("CircleShape2D_fkybt")
+
+[connection signal="health_changed" from="Health" to="." method="_on_health_health_changed"]
+[connection signal="health_drained" from="Health" to="." method="handle_dangerous_collision"]
+[connection signal="take_damage" from="Health" to="." method="_on_health_take_damage"]
+[connection signal="amount_collected_changed" from="Collector" to="." method="_on_collector_amount_collected_changed"]
+[connection signal="area_entered" from="Collector" to="Collector" method="_on_area_entered"]

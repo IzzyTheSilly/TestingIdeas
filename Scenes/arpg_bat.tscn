@@ -1,0 +1,200 @@
+[gd_scene format=3 uid="uid://234dk0l35byu"]
+
+[ext_resource type="Texture2D" uid="uid://csyspq3i6mvrq" path="res://PremadeAssets/Action RPG Resources/Enemies/Bat.png" id="1_85gpi"]
+[ext_resource type="Script" uid="uid://cjpeudyyhnddk" path="res://Scripts/arpg_bat.gd" id="1_rk6lr"]
+[ext_resource type="PackedScene" uid="uid://c7df7252467lq" path="res://Scenes/bat_death_effect.tscn" id="2_ijt6k"]
+[ext_resource type="Texture2D" uid="uid://8kv2e4h0koi8" path="res://PremadeAssets/Action RPG Resources/Shadows/SmallShadow.png" id="2_j38kt"]
+[ext_resource type="Script" uid="uid://dprhbcctq2w0k" path="res://Scripts/health.gd" id="4_qmiba"]
+[ext_resource type="Script" uid="uid://cg27e8dckb775" path="res://Scripts/hurtbox.gd" id="4_tyyyn"]
+[ext_resource type="Shader" uid="uid://300k2t6dm1ef" path="res://Visuals/Shaders/blink.gdshader" id="4_u3usl"]
+[ext_resource type="Script" uid="uid://cf5bka0hmh3j3" path="res://Scripts/effect_spawner.gd" id="7_s2qcm"]
+[ext_resource type="PackedScene" uid="uid://k4yvlmq3kur3" path="res://Scenes/player_attack_effect.tscn" id="8_l6aa4"]
+[ext_resource type="Script" uid="uid://cxbyrgp0grrs2" path="res://Scripts/player_detector.gd" id="9_pyu0y"]
+[ext_resource type="Script" uid="uid://cdfsbgvjtupof" path="res://Scripts/soft_collision.gd" id="10_ysnp5"]
+[ext_resource type="Script" uid="uid://cubjvgey1iqlc" path="res://Scripts/wander_point.gd" id="11_mpgtw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wej7q"]
+resource_local_to_scene = true
+shader = ExtResource("4_u3usl")
+shader_parameter/active = false
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a4x7e"]
+atlas = ExtResource("1_85gpi")
+region = Rect2(0, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g42sa"]
+atlas = ExtResource("1_85gpi")
+region = Rect2(16, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8kxxd"]
+atlas = ExtResource("1_85gpi")
+region = Rect2(32, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ryet8"]
+atlas = ExtResource("1_85gpi")
+region = Rect2(48, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_35lh2"]
+atlas = ExtResource("1_85gpi")
+region = Rect2(64, 0, 16, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l2tc5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a4x7e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g42sa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8kxxd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ryet8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_35lh2")
+}],
+"loop": 1,
+"name": &"fly",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pds7r"]
+radius = 3.0
+height = 8.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_thuur"]
+radius = 8.0
+height = 20.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f23om"]
+radius = 75.0067
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y44gw"]
+radius = 4.0
+height = 10.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_k4kn4"]
+radius = 9.0
+
+[sub_resource type="Animation" id="Animation_fmiaw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_dhuia"]
+resource_name = "blink"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_36eaj"]
+_data = {
+&"RESET": SubResource("Animation_fmiaw"),
+&"blink": SubResource("Animation_dhuia")
+}
+
+[node name="ARPGBat" type="CharacterBody2D" unique_id=164926525]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_rk6lr")
+bat_death_effect = ExtResource("2_ijt6k")
+
+[node name="ShadowSprite" type="Sprite2D" parent="." unique_id=526239048]
+texture = ExtResource("2_j38kt")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=483129332]
+material = SubResource("ShaderMaterial_wej7q")
+sprite_frames = SubResource("SpriteFrames_l2tc5")
+animation = &"fly"
+autoplay = "fly"
+frame = 1
+frame_progress = 0.560897
+offset = Vector2(0, -12)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1125301171]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_pds7r")
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=365318422 node_paths=PackedStringArray("health")]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("4_tyyyn")
+health = NodePath("../Health")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1631205100]
+position = Vector2(0, -12)
+shape = SubResource("CapsuleShape2D_thuur")
+
+[node name="Health" type="Node" parent="." unique_id=765347639]
+script = ExtResource("4_qmiba")
+max_health = 3
+
+[node name="DeathEffectSpawner" type="Node" parent="." unique_id=1672894311]
+script = ExtResource("7_s2qcm")
+effect_scene = ExtResource("2_ijt6k")
+
+[node name="HitEffectSpawner" type="Node" parent="." unique_id=1330589162]
+script = ExtResource("7_s2qcm")
+effect_scene = ExtResource("8_l6aa4")
+
+[node name="PlayerDetector" type="Area2D" parent="." unique_id=391728063]
+collision_layer = 0
+script = ExtResource("9_pyu0y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector" unique_id=976574877]
+shape = SubResource("CircleShape2D_f23om")
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=127593091]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=491176440]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_y44gw")
+
+[node name="SoftCollision" type="Area2D" parent="." unique_id=1520711806]
+collision_layer = 64
+collision_mask = 64
+script = ExtResource("10_ysnp5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SoftCollision" unique_id=1940018840]
+shape = SubResource("CircleShape2D_k4kn4")
+
+[node name="WanderPoint" type="Timer" parent="." unique_id=1733197270]
+wait_time = 1.5
+one_shot = true
+autostart = true
+script = ExtResource("11_mpgtw")
+
+[node name="BlinkingPlayer" type="AnimationPlayer" parent="." unique_id=42316924]
+libraries/ = SubResource("AnimationLibrary_36eaj")
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="health_drained" from="Health" to="." method="_on_health_drained"]
+[connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]
+[connection signal="body_exited" from="PlayerDetector" to="." method="_on_player_detector_body_exited"]
+[connection signal="timeout" from="WanderPoint" to="." method="_on_wander_point_timeout"]
+[connection signal="timeout" from="WanderPoint" to="WanderPoint" method="_on_timeout"]

@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cs3w4fovsahj4"]
+
+[ext_resource type="Script" uid="uid://dl17hcppdg7g6" path="res://Scripts/basic_bullet.gd" id="1_c1t6d"]
+[ext_resource type="Texture2D" uid="uid://cgyseinjn5fr7" path="res://Visuals/Images/Rad-Circle-3.png" id="1_vn0l6"]
+[ext_resource type="Script" uid="uid://7j87s2ph2qh4" path="res://Scripts/despawner.gd" id="3_v56dq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mpqij"]
+radius = 4.0
+
+[node name="BasicBullet" type="Area2D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_c1t6d")
+bullet_pierce = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_mpqij")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 8.9407e-08)
+scale = Vector2(0.0144, 0.0144)
+texture = ExtResource("1_vn0l6")
+
+[node name="Despawner" type="Node" parent="."]
+script = ExtResource("3_v56dq")
+life_span = 2.0
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

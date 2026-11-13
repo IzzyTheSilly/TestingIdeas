@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://c2xc2sd4msu0h"]
+
+[ext_resource type="Texture2D" uid="uid://ceac2v4d0010f" path="res://PremadeAssets/Action RPG Resources/World/Bush.png" id="1_0t5qs"]
+[ext_resource type="Script" uid="uid://c3dygn8gaovdi" path="res://Scripts/arpg_bush.gd" id="1_rp7qy"]
+[ext_resource type="Texture2D" uid="uid://c3hdvrknk2t0w" path="res://PremadeAssets/Action RPG Resources/Shadows/LargeShadow.png" id="2_vuafm"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4o7c1"]
+radius = 6.0
+height = 24.0
+
+[node name="ARPGBush" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_rp7qy")
+
+[node name="ShadowSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_vuafm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -9)
+texture = ExtResource("1_0t5qs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_4o7c1")

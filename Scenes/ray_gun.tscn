@@ -1,0 +1,107 @@
+[gd_scene load_steps=14 format=3 uid="uid://ce84imia5plxe"]
+
+[ext_resource type="Script" uid="uid://55bh1vsmm8f3" path="res://Scripts/dynamic_camera.gd" id="1_2yu8k"]
+[ext_resource type="PackedScene" uid="uid://d337ndmy08g1e" path="res://Scenes/player.tscn" id="3_nswuj"]
+[ext_resource type="Script" uid="uid://c03eutvd2wt4t" path="res://Scripts/ray_gun.gd" id="3_wcn0l"]
+[ext_resource type="PackedScene" uid="uid://cbkipnswdoh8a" path="res://Scenes/teleporter.tscn" id="4_nswuj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rw33a"]
+radius = 72.8354
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eljbr"]
+size = Vector2(45.9764, 157.001)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u4px3"]
+size = Vector2(136.731, 47.2197)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xdfux"]
+size = Vector2(209.902, 42.7941)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5c2pa"]
+radius = 95.021
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4lmuf"]
+radius = 137.058
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_it70l"]
+radius = 39.7119
+height = 148.696
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bu4ca"]
+radius = 20.3083
+height = 151.373
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2rb6x"]
+radius = 41.3766
+height = 198.398
+
+[node name="RayGun" type="Node2D"]
+
+[node name="Terrain" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain"]
+position = Vector2(-206, 145)
+shape = SubResource("CircleShape2D_rw33a")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Terrain"]
+position = Vector2(222, 4.00002)
+rotation = 0.735726
+shape = SubResource("RectangleShape2D_eljbr")
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="Terrain"]
+position = Vector2(200, -105)
+rotation = 0.388699
+shape = SubResource("RectangleShape2D_u4px3")
+
+[node name="CollisionShape2D9" type="CollisionShape2D" parent="Terrain"]
+position = Vector2(-274, 51)
+rotation = 1.95601
+shape = SubResource("RectangleShape2D_xdfux")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Terrain"]
+position = Vector2(-63, 184)
+shape = SubResource("CircleShape2D_5c2pa")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Terrain"]
+position = Vector2(157, 209)
+shape = SubResource("CircleShape2D_4lmuf")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="Terrain"]
+position = Vector2(95, -134)
+rotation = 0.351981
+shape = SubResource("CapsuleShape2D_it70l")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="Terrain"]
+position = Vector2(-136, -138)
+rotation = -1.82816
+shape = SubResource("CapsuleShape2D_bu4ca")
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="Terrain"]
+position = Vector2(-23, -145)
+rotation = -0.610217
+shape = SubResource("CapsuleShape2D_2rb6x")
+
+[node name="MainLabel" type="RichTextLabel" parent="."]
+offset_left = -366.0
+offset_top = -58.0
+offset_right = -309.0
+offset_bottom = -32.0
+theme_override_font_sizes/normal_font_size = 10
+text = "To Main"
+
+[node name="MainTeleporter" parent="." instance=ExtResource("4_nswuj")]
+position = Vector2(-347, -27)
+
+[node name="Player" parent="." instance=ExtResource("3_nswuj")]
+control_mode = 1
+
+[node name="RayGun" type="Node2D" parent="Player" node_paths=PackedStringArray("lines")]
+script = ExtResource("3_wcn0l")
+lines = [null, null, null, null, null, null, null, null, null, null]
+bounce_limit = 4
+ray_range = 1000
+
+[node name="DynamicCamera" type="Camera2D" parent="Player" node_paths=PackedStringArray("player")]
+script = ExtResource("1_2yu8k")
+player = NodePath("..")
+metadata/_custom_type_script = "uid://55bh1vsmm8f3"

@@ -1,0 +1,46 @@
+[gd_scene load_steps=9 format=3 uid="uid://33jx1qkksm4a"]
+
+[ext_resource type="Texture2D" uid="uid://ni0stgkj3qwn" path="res://Visuals/Images/peter griffin but real.png" id="1_6iwf1"]
+[ext_resource type="Script" uid="uid://bva34yrnwe1ny" path="res://Scripts/basic_enemy.gd" id="1_6rhk3"]
+[ext_resource type="PackedScene" uid="uid://cb64wchujgo6t" path="res://Scenes/healing_object.tscn" id="2_6cefa"]
+[ext_resource type="Script" uid="uid://7j87s2ph2qh4" path="res://Scripts/despawner.gd" id="3_rfqyc"]
+[ext_resource type="Script" uid="uid://dprhbcctq2w0k" path="res://Scripts/health.gd" id="4_uirqx"]
+[ext_resource type="Script" uid="uid://cg27e8dckb775" path="res://Scripts/hurtbox.gd" id="5_55aoq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7sxtt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kev83"]
+
+[node name="BasicEnemy" type="Area2D"]
+collision_layer = 4
+script = ExtResource("1_6rhk3")
+healing_object_scene = ExtResource("2_6cefa")
+heal_drop_chance = 0.05
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_7sxtt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-3.57628e-07, -5.96046e-07)
+scale = Vector2(0.097166, 0.0612813)
+texture = ExtResource("1_6iwf1")
+
+[node name="Despawner" type="Node" parent="."]
+script = ExtResource("3_rfqyc")
+life_span = 30.0
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("4_uirqx")
+max_health = 1
+
+[node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("5_55aoq")
+health = NodePath("../Health")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_kev83")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="health_drained" from="Health" to="." method="_on_health_drained"]

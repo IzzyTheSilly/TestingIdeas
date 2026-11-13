@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://cnp4egx556ivq"]
+
+[ext_resource type="Script" uid="uid://4ftgpm2orkv2" path="res://Scripts/ball_fall_test.gd" id="1_ug8e6"]
+[ext_resource type="Texture2D" uid="uid://cxu2id3llq2it" path="res://Visuals/Images/jesse.PNG" id="2_vypqg"]
+[ext_resource type="Script" uid="uid://cg27e8dckb775" path="res://Scripts/hurtbox.gd" id="3_bj3u6"]
+[ext_resource type="Script" uid="uid://dprhbcctq2w0k" path="res://Scripts/health.gd" id="4_8g36g"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o1es8"]
+radius = 9.05539
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yykup"]
+radius = 9.0
+
+[node name="Ball" type="RigidBody2D" unique_id=1050395138 node_paths=PackedStringArray("health")]
+collision_mask = 7
+script = ExtResource("1_ug8e6")
+testing_fall = false
+health = NodePath("Health")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=873424641]
+shape = SubResource("CircleShape2D_o1es8")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2021659577]
+position = Vector2(-0.500035, 4.76837e-06)
+scale = Vector2(0.175258, 0.106509)
+texture = ExtResource("2_vypqg")
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1056631520 node_paths=PackedStringArray("health")]
+collision_mask = 8
+script = ExtResource("3_bj3u6")
+health = NodePath("../Health")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1981941832]
+shape = SubResource("CircleShape2D_yykup")
+
+[node name="Health" type="Node" parent="." unique_id=1632625321]
+script = ExtResource("4_8g36g")
+
+[connection signal="health_drained" from="Health" to="." method="_on_health_drained"]

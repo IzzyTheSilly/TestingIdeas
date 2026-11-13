@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://dnl1r2hmrwuj3"]
+
+[ext_resource type="Script" uid="uid://b3808y3l8llay" path="res://Scripts/teleporter_3d.gd" id="1_jcon8"]
+[ext_resource type="Texture2D" uid="uid://ctp4hcymlf5bp" path="res://Visuals/Images/portal.png" id="1_sqpc8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jcon8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ofidq"]
+albedo_color = Color(1, 0.113725, 0.690196, 1)
+albedo_texture = ExtResource("1_sqpc8")
+
+[sub_resource type="BoxMesh" id="BoxMesh_3esm0"]
+material = SubResource("StandardMaterial3D_ofidq")
+
+[node name="Teleporter3D" type="Area3D"]
+script = ExtResource("1_jcon8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_jcon8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_3esm0")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

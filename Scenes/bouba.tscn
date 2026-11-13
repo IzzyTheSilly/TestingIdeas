@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://7wolpeysafnd"]
+
+[ext_resource type="Script" uid="uid://bp60qxaao57w3" path="res://Scripts/bouba.gd" id="1_nk8at"]
+[ext_resource type="Texture2D" uid="uid://cctaxj58jhie7" path="res://Visuals/Images/bouba.PNG" id="2_ojyol"]
+[ext_resource type="Script" uid="uid://7j87s2ph2qh4" path="res://Scripts/despawner.gd" id="3_nhvav"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hegtb"]
+
+[node name="Bouba" type="Area2D"]
+collision_layer = 16
+script = ExtResource("1_nk8at")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_hegtb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1.19209e-06, 0)
+scale = Vector2(0.124224, 0.125786)
+texture = ExtResource("2_ojyol")
+
+[node name="Despawner" type="Node" parent="."]
+script = ExtResource("3_nhvav")
+life_span = -1.0
+metadata/_custom_type_script = "uid://7j87s2ph2qh4"
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

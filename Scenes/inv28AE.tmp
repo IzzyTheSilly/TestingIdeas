@@ -1,0 +1,209 @@
+[gd_scene load_steps=8 format=3 uid="uid://df7w8rq6mh8h3"]
+
+[ext_resource type="Script" path="res://Scripts/inventory.gd" id="1_cb2p8"]
+[ext_resource type="Resource" uid="uid://ywyxgrms4ipy" path="res://Scripts/Resources/Inventory/player_inventory.tres" id="2_4h0xl"]
+[ext_resource type="Texture2D" uid="uid://d116ox53s57ar" path="res://Visuals/Images/panel_bg.png" id="3_m1j7q"]
+[ext_resource type="PackedScene" uid="uid://bflhyab0mcpnt" path="res://Scenes/inventory_slot.tscn" id="4_7xhhw"]
+[ext_resource type="Texture2D" uid="uid://cgyseinjn5fr7" path="res://Visuals/Images/Rad-Circle-3.png" id="4_o38xr"]
+[ext_resource type="Resource" uid="uid://qiyiyydph4y1" path="res://Scripts/Resources/Items/nerdle.tres" id="4_s13yy"]
+[ext_resource type="FontFile" uid="uid://u4o4tfvnmq87" path="res://Visuals/Fonts/Montserrat-Medium.ttf" id="5_plxdc"]
+
+[node name="Inventory" type="Control" node_paths=PackedStringArray("item_grid", "grabbed_slot_display", "selected_item_image", "selected_item_name", "selected_item_description")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_right = -2.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cb2p8")
+inventory_data = ExtResource("2_4h0xl")
+item_grid = NodePath("HBoxContainer/InventoryItems/ItemsScroll/Items")
+item_slot_template = ExtResource("4_7xhhw")
+grabbed_slot_display = NodePath("GrabbedSlotDisplay")
+selected_item_image = NodePath("HBoxContainer/InventoryDescription/VBoxContainer/ItemImageBG/ItemImage")
+selected_item_name = NodePath("HBoxContainer/InventoryDescription/VBoxContainer/ItemNameText")
+selected_item_description = NodePath("HBoxContainer/InventoryDescription/VBoxContainer/ItemDescriptionTextBG/ItemDescriptionText")
+item_type = ExtResource("4_s13yy")
+add_amount = 3
+switch_slot_1 = 0
+switch_slot_2 = 13
+metadata/_edit_horizontal_guides_ = []
+
+[node name="InventoryBG" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_m1j7q")
+region_rect = Rect2(-6, -6, 28, 28)
+patch_margin_left = 9
+patch_margin_top = 9
+patch_margin_right = 9
+patch_margin_bottom = 9
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 23.0
+offset_top = 25.0
+offset_right = -22.0
+offset_bottom = -21.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="InventoryItems" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="InventoryItemsBG" type="NinePatchRect" parent="HBoxContainer/InventoryItems"]
+self_modulate = Color(1, 0.803922, 0.447059, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_m1j7q")
+region_rect = Rect2(-11, -11, 38, 38)
+patch_margin_left = 14
+patch_margin_top = 14
+patch_margin_right = 14
+patch_margin_bottom = 14
+
+[node name="ItemsScroll" type="ScrollContainer" parent="HBoxContainer/InventoryItems"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -18.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+scroll_vertical_custom_step = 20.0
+horizontal_scroll_mode = 0
+
+[node name="Items" type="GridContainer" parent="HBoxContainer/InventoryItems/ItemsScroll"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 2
+theme_override_constants/h_separation = 13
+theme_override_constants/v_separation = 9
+columns = 5
+
+[node name="InventoryDescription" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InventoryDescriptionBG" type="NinePatchRect" parent="HBoxContainer/InventoryDescription"]
+self_modulate = Color(1, 0.788814, 0.541173, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_m1j7q")
+region_rect = Rect2(-11, -11, 38, 38)
+patch_margin_left = 14
+patch_margin_top = 14
+patch_margin_right = 14
+patch_margin_bottom = 14
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/InventoryDescription"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 21.0
+offset_right = -14.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="ItemImageBG" type="NinePatchRect" parent="HBoxContainer/InventoryDescription/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("3_m1j7q")
+region_rect = Rect2(-1, -1, 18, 18)
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="ItemImage" type="TextureRect" parent="HBoxContainer/InventoryDescription/VBoxContainer/ItemImageBG"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_o38xr")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ItemNameText" type="RichTextLabel" parent="HBoxContainer/InventoryDescription/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("5_plxdc")
+bbcode_enabled = true
+text = "[center]AMAZING CIRCLE[/center]"
+fit_content = true
+
+[node name="ItemDescriptionTextBG" type="NinePatchRect" parent="HBoxContainer/InventoryDescription/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+texture = ExtResource("3_m1j7q")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="ItemDescriptionText" type="RichTextLabel" parent="HBoxContainer/InventoryDescription/VBoxContainer/ItemDescriptionTextBG"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -3.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("5_plxdc")
+bbcode_enabled = true
+text = "[center]AMOGUS POCUS[/center]"
+scroll_active = false
+
+[node name="GrabbedSlotDisplay" parent="." instance=ExtResource("4_7xhhw")]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 100.0
+offset_bottom = 100.0
+mouse_filter = 2

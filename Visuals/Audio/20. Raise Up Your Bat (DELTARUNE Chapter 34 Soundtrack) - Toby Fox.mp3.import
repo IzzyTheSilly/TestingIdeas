@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dqdsaolopr1dg"
+path="res://.godot/imported/20. Raise Up Your Bat (DELTARUNE Chapter 34 Soundtrack) - Toby Fox.mp3-49a3d1ec0b5eb6a9423acdacb4375a09.mp3str"
+
+[deps]
+
+source_file="res://Visuals/Audio/20. Raise Up Your Bat (DELTARUNE Chapter 34 Soundtrack) - Toby Fox.mp3"
+dest_files=["res://.godot/imported/20. Raise Up Your Bat (DELTARUNE Chapter 34 Soundtrack) - Toby Fox.mp3-49a3d1ec0b5eb6a9423acdacb4375a09.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ce4ad7g21fvx4"
+path="res://.godot/imported/Menu Move.wav-68ac0f844ec155544dc201bff8372f88.sample"
+
+[deps]
+
+source_file="res://PremadeAssets/Action RPG Resources/Music and Sounds/Menu Move.wav"
+dest_files=["res://.godot/imported/Menu Move.wav-68ac0f844ec155544dc201bff8372f88.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

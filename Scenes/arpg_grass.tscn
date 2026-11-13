@@ -1,0 +1,55 @@
+[gd_scene load_steps=10 format=3 uid="uid://cptoy2uhbamn8"]
+
+[ext_resource type="Texture2D" uid="uid://68xhm3g83f87" path="res://PremadeAssets/Action RPG Resources/World/Grass.png" id="1_wepjh"]
+[ext_resource type="Script" uid="uid://cbbqybf5f7j8k" path="res://Scripts/arpg_grass.gd" id="1_xu6ab"]
+[ext_resource type="Texture2D" uid="uid://pnipy6lda54u" path="res://PremadeAssets/Action RPG Resources/Shadows/MediumShadow.png" id="2_sn4cr"]
+[ext_resource type="PackedScene" uid="uid://djtx8dbef7mm4" path="res://Scenes/grass_slice_effect.tscn" id="2_tii4e"]
+[ext_resource type="Script" uid="uid://cg27e8dckb775" path="res://Scripts/hurtbox.gd" id="4_1ud7m"]
+[ext_resource type="Script" uid="uid://dprhbcctq2w0k" path="res://Scripts/health.gd" id="5_tbani"]
+[ext_resource type="Script" uid="uid://cf5bka0hmh3j3" path="res://Scripts/effect_spawner.gd" id="6_gv1gr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_naynj"]
+radius = 4.0
+height = 12.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3fk7"]
+size = Vector2(16, 14)
+
+[node name="ARPGGrass" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 8
+script = ExtResource("1_xu6ab")
+
+[node name="ShadowSprite" type="Sprite2D" parent="."]
+position = Vector2(0, 1)
+texture = ExtResource("2_sn4cr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 1)
+texture = ExtResource("1_wepjh")
+offset = Vector2(0, -4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_naynj")
+
+[node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("4_1ud7m")
+health = NodePath("../Health")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_k3fk7")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("5_tbani")
+max_health = 1
+
+[node name="EffectSpawner" type="Node" parent="."]
+script = ExtResource("6_gv1gr")
+effect_scene = ExtResource("2_tii4e")
+
+[connection signal="health_drained" from="Health" to="." method="_on_health_drained"]

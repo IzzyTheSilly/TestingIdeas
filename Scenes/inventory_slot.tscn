@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://bflhyab0mcpnt"]
+
+[ext_resource type="Texture2D" uid="uid://cb8g6ri4rf7d6" path="res://Visuals/Images/item_frame.jpg" id="1_ok7eg"]
+[ext_resource type="FontFile" uid="uid://u4o4tfvnmq87" path="res://Visuals/Fonts/Montserrat-Medium.ttf" id="2_aqmp6"]
+[ext_resource type="Script" uid="uid://b4yrftehlxua0" path="res://Scripts/player_inventory_slot.gd" id="2_byaqc"]
+
+[node name="InventorySlot" type="TextureRect" node_paths=PackedStringArray("item_image", "amount_text")]
+custom_minimum_size = Vector2(100, 100)
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 104.0
+offset_bottom = 104.0
+texture = ExtResource("1_ok7eg")
+expand_mode = 3
+script = ExtResource("2_byaqc")
+item_image = NodePath("MarginContainer/ItemImage")
+amount_text = NodePath("MarginContainer/ItemAmountText")
+selected_color = Color(0.0980392, 0.996078, 0, 1)
+hovered_color = Color(0.0156863, 0.247059, 1, 1)
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 9.0
+offset_right = 92.0
+offset_bottom = 91.0
+mouse_filter = 2
+
+[node name="ItemImage" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+
+[node name="ItemAmountText" type="RichTextLabel" parent="MarginContainer"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("2_aqmp6")
+theme_override_font_sizes/normal_font_size = 15
+fit_content = true
+scroll_active = false
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

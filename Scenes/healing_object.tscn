@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://cb64wchujgo6t"]
+
+[ext_resource type="Texture2D" uid="uid://t8vbx4katvtn" path="res://Visuals/Images/tonspam.png" id="1_6keua"]
+[ext_resource type="Script" uid="uid://p7lyy8lixoyb" path="res://Scripts/healing_object.gd" id="2_2nwfb"]
+[ext_resource type="Script" uid="uid://7j87s2ph2qh4" path="res://Scripts/despawner.gd" id="3_eb7s6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6keua"]
+size = Vector2(201, 274)
+
+[node name="HealingObject" type="Sprite2D"]
+scale = Vector2(0.108073, 0.108073)
+texture = ExtResource("1_6keua")
+script = ExtResource("2_2nwfb")
+healing_amount = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.5, 1)
+shape = SubResource("RectangleShape2D_6keua")
+
+[node name="Despawner" type="Node" parent="."]
+script = ExtResource("3_eb7s6")
+metadata/_custom_type_script = "uid://7j87s2ph2qh4"
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

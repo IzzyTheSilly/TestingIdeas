@@ -1,0 +1,215 @@
+[gd_scene load_steps=26 format=3 uid="uid://dccjo8m2hubi0"]
+
+[ext_resource type="Script" uid="uid://biruuddgkq2mi" path="res://Scripts/road_repeater.gd" id="1_4mwtu"]
+[ext_resource type="Texture2D" uid="uid://c1ptkyg2cvirw" path="res://Visuals/Images/hometown_road.png" id="1_dd8co"]
+[ext_resource type="Script" uid="uid://baroevhckgtk1" path="res://Scripts/bergentrucking.gd" id="1_ve4qi"]
+[ext_resource type="PackedScene" uid="uid://d337ndmy08g1e" path="res://Scenes/player.tscn" id="1_x8hst"]
+[ext_resource type="Texture2D" uid="uid://cim3mbtqypb1x" path="res://Visuals/Images/assgore.jpg" id="2_6mubt"]
+[ext_resource type="Texture2D" uid="uid://duou4sf8r0x13" path="res://Visuals/Images/dess_running.png" id="2_r6xdp"]
+[ext_resource type="Script" uid="uid://dktih3eog1koc" path="res://Scripts/falling_obstacle_spawner.gd" id="2_s68kx"]
+[ext_resource type="Texture2D" uid="uid://kgotfnfyhmt8" path="res://Visuals/Images/assgore_truck.png" id="3_dn2f1"]
+[ext_resource type="Script" uid="uid://df20u8t11aaaa" path="res://Scripts/spawnable_falling_obstacle_info.gd" id="3_nj8wd"]
+[ext_resource type="PackedScene" uid="uid://uuhbbhh8xstw" path="res://Scenes/spawnable_falling_obstacle_base.tscn" id="3_qvtbo"]
+[ext_resource type="Script" uid="uid://bfiiuk3v2muk5" path="res://Scripts/dess_running.gd" id="4_rp14y"]
+[ext_resource type="Script" uid="uid://c78ody8g0rqvi" path="res://Scripts/assgore_truck.gd" id="5_mheda"]
+[ext_resource type="Script" uid="uid://55bh1vsmm8f3" path="res://Scripts/dynamic_camera.gd" id="7_263aq"]
+[ext_resource type="Texture2D" uid="uid://cctaxj58jhie7" path="res://Visuals/Images/bouba.PNG" id="11_gnom4"]
+[ext_resource type="Texture2D" uid="uid://byp8d586birge" path="res://Visuals/Images/baby.png" id="12_s4yel"]
+[ext_resource type="Texture2D" uid="uid://vnrque0yvxe" path="res://Visuals/Images/log.png" id="13_gnom4"]
+[ext_resource type="Texture2D" uid="uid://5qafqbdqntly" path="res://Visuals/Images/trash_can.png" id="14_jx4du"]
+[ext_resource type="FontFile" uid="uid://u4o4tfvnmq87" path="res://Visuals/Fonts/Montserrat-Medium.ttf" id="17_jx4du"]
+[ext_resource type="PackedScene" uid="uid://cbkipnswdoh8a" path="res://Scenes/teleporter.tscn" id="18_70yro"]
+
+[sub_resource type="Resource" id="Resource_gb42u"]
+script = ExtResource("3_nj8wd")
+probability = 4
+sprite = ExtResource("12_s4yel")
+speed = 300
+is_bouba = false
+is_baby = true
+is_roadblock = false
+metadata/_custom_type_script = "uid://df20u8t11aaaa"
+
+[sub_resource type="Resource" id="Resource_nj8wd"]
+script = ExtResource("3_nj8wd")
+probability = 4
+sprite = ExtResource("13_gnom4")
+speed = 300
+is_bouba = false
+is_baby = false
+is_roadblock = true
+metadata/_custom_type_script = "uid://df20u8t11aaaa"
+
+[sub_resource type="Resource" id="Resource_70yro"]
+script = ExtResource("3_nj8wd")
+probability = 7
+sprite = ExtResource("14_jx4du")
+speed = 300
+is_bouba = false
+is_baby = false
+is_roadblock = true
+metadata/_custom_type_script = "uid://df20u8t11aaaa"
+
+[sub_resource type="Resource" id="Resource_jx4du"]
+script = ExtResource("3_nj8wd")
+probability = 4
+sprite = ExtResource("11_gnom4")
+speed = 300
+is_bouba = true
+is_baby = false
+is_roadblock = false
+metadata/_custom_type_script = "uid://df20u8t11aaaa"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s4yel"]
+size = Vector2(52.6755, 187.293)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_263aq"]
+size = Vector2(36.5, 45)
+
+[node name="Bergentrucking" type="Node2D" node_paths=PackedStringArray("road_repeater", "dess_running", "falling_obstacle_spawner", "player", "truck")]
+z_index = 1
+script = ExtResource("1_ve4qi")
+road_repeater = NodePath("RoadRepeater")
+dess_running = NodePath("DessRunning")
+falling_obstacle_spawner = NodePath("FallingObstacleSpawner")
+player = NodePath("Player")
+truck = NodePath("Player/AssgoreTruck")
+
+[node name="RoadRepeater" type="Node2D" parent="." node_paths=PackedStringArray("road_sprites", "timer")]
+script = ExtResource("1_4mwtu")
+road_sprites = [NodePath("HometownRoad"), NodePath("HometownRoad2"), NodePath("HometownRoad3")]
+timer = NodePath("RoadRepeaterTimer")
+speed = 300
+
+[node name="HometownRoad" type="Sprite2D" parent="RoadRepeater"]
+position = Vector2(580, 467)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_dd8co")
+
+[node name="HometownRoad2" type="Sprite2D" parent="RoadRepeater"]
+position = Vector2(580, 143)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_dd8co")
+
+[node name="HometownRoad3" type="Sprite2D" parent="RoadRepeater"]
+position = Vector2(580, -181)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_dd8co")
+
+[node name="RoadRepeaterTimer" type="Timer" parent="RoadRepeater"]
+autostart = true
+
+[node name="DessRunning" type="Sprite2D" parent="."]
+position = Vector2(568, 362)
+scale = Vector2(0.119, 0.119)
+texture = ExtResource("2_r6xdp")
+script = ExtResource("4_rp14y")
+
+[node name="DessRunningTimer" type="Timer" parent="DessRunning"]
+wait_time = 0.2
+autostart = true
+
+[node name="FallingObstacleSpawner" type="Node2D" parent="." node_paths=PackedStringArray("left_spawn_limit", "right_spawn_limit")]
+position = Vector2(1, 0)
+script = ExtResource("2_s68kx")
+spawnable_falling_obstacle_base = ExtResource("3_qvtbo")
+left_spawn_limit = NodePath("LeftSpawnLimit")
+right_spawn_limit = NodePath("RightSpawnLimit")
+spawnable_obstacles_array = Array[ExtResource("3_nj8wd")]([SubResource("Resource_gb42u"), SubResource("Resource_nj8wd"), SubResource("Resource_70yro"), SubResource("Resource_jx4du")])
+
+[node name="LeftSpawnLimit" type="Marker2D" parent="FallingObstacleSpawner"]
+position = Vector2(452, 209)
+
+[node name="RightSpawnLimit" type="Marker2D" parent="FallingObstacleSpawner"]
+position = Vector2(701, 215)
+
+[node name="SpawnerTimer" type="Timer" parent="FallingObstacleSpawner"]
+autostart = true
+
+[node name="Player" parent="." instance=ExtResource("1_x8hst")]
+position = Vector2(568, 533)
+motion_mode = 1
+speed = 250.0
+inertia = 10.0
+dash_force = 0.0
+axis_lock = 1
+control_mode = 1
+
+[node name="AssgoreTruck" type="Sprite2D" parent="Player" node_paths=PackedStringArray("score_label")]
+z_index = 1
+position = Vector2(0.0253825, 0.17815)
+rotation = 1.5708
+scale = Vector2(0.170855, 0.170855)
+texture = ExtResource("3_dn2f1")
+offset = Vector2(127.721, 11.8545)
+script = ExtResource("5_mheda")
+score_label = NodePath("../../CanvasLayer/ScoreLabel")
+
+[node name="Area2D" type="Area2D" parent="Player/AssgoreTruck"]
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/AssgoreTruck/Area2D"]
+position = Vector2(-115.175, 11.8542)
+shape = SubResource("RectangleShape2D_s4yel")
+
+[node name="Area2D2" type="Area2D" parent="Player/AssgoreTruck"]
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/AssgoreTruck/Area2D2"]
+position = Vector2(168.692, 11.8539)
+shape = SubResource("RectangleShape2D_s4yel")
+
+[node name="Assgore" type="Sprite2D" parent="Player"]
+z_index = 1
+position = Vector2(1.44243e-05, -3.99947e-05)
+scale = Vector2(0.04, 0.0399999)
+texture = ExtResource("2_6mubt")
+
+[node name="DynamicCamera" type="Camera2D" parent="."]
+position = Vector2(576, 457)
+script = ExtResource("7_263aq")
+cam_size = 0.4
+metadata/_custom_type_script = "uid://55bh1vsmm8f3"
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(417, 541)
+shape = SubResource("RectangleShape2D_263aq")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(735, 541)
+shape = SubResource("RectangleShape2D_263aq")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="RichTextLabel" parent="CanvasLayer"]
+offset_right = 663.0
+offset_bottom = 237.0
+theme_override_fonts/normal_font = ExtResource("17_jx4du")
+theme_override_font_sizes/normal_font_size = 50
+text = "Score: "
+
+[node name="Teleporter" parent="." instance=ExtResource("18_70yro")]
+position = Vector2(777, 430)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Teleporter"]
+offset_left = -11.0
+offset_top = -54.0
+offset_right = 74.0
+offset_bottom = -1.0
+text = "To
+Main Hub"
+
+[connection signal="timeout" from="RoadRepeater/RoadRepeaterTimer" to="RoadRepeater" method="_on_timer_timeout"]
+[connection signal="timeout" from="DessRunning/DessRunningTimer" to="DessRunning" method="_on_dess_running_timer_timeout"]
+[connection signal="timeout" from="FallingObstacleSpawner/SpawnerTimer" to="FallingObstacleSpawner" method="_on_spawner_timer_timeout"]
+[connection signal="get_bouba" from="Player/AssgoreTruck" to="Player" method="_on_assgore_truck_get_bouba"]
+[connection signal="area_entered" from="Player/AssgoreTruck/Area2D" to="Player/AssgoreTruck" method="_on_area_2d_area_entered"]
+[connection signal="area_entered" from="Player/AssgoreTruck/Area2D2" to="Player/AssgoreTruck" method="_on_area_2d_2_area_entered"]

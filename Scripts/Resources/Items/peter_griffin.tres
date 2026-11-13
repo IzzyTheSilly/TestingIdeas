@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemTemplate" load_steps=3 format=3 uid="uid://4072oe3i3uri"]
+
+[ext_resource type="Texture2D" uid="uid://ni0stgkj3qwn" path="res://Visuals/Images/peter griffin but real.png" id="1_ejnb0"]
+[ext_resource type="Script" uid="uid://dxquvhtwanm5r" path="res://Scripts/item_template.gd" id="2_qrs8i"]
+
+[resource]
+script = ExtResource("2_qrs8i")
+item_name = "Peter Griffin"
+item_sprite = ExtResource("1_ejnb0")
+max_stack = 1
+item_description = "Wow Louis, this is worsw than that time i was in Fortnite!"

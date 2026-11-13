@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://k4yvlmq3kur3"]
+
+[ext_resource type="Texture2D" uid="uid://c3bilkm58fvc5" path="res://PremadeAssets/Action RPG Resources/Effects/HitEffect.png" id="1_aoy7q"]
+[ext_resource type="Script" uid="uid://ccasw2sqtaqmk" path="res://Scripts/despawn_effect.gd" id="2_jqja5"]
+[ext_resource type="AudioStream" uid="uid://ctwayo81w3yhx" path="res://PremadeAssets/Action RPG Resources/Music and Sounds/Hit.wav" id="3_ooqp4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ffp86"]
+atlas = ExtResource("1_aoy7q")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_38jkx"]
+atlas = ExtResource("1_aoy7q")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7jnh4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ffp86")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_38jkx")
+}],
+"loop": false,
+"name": &"effect",
+"speed": 15.0
+}]
+
+[node name="PlayerAttackEffect" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_7jnh4")
+animation = &"effect"
+frame = 1
+frame_progress = 1.0
+script = ExtResource("2_jqja5")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ooqp4")
+volume_db = -10.759
+autoplay = true

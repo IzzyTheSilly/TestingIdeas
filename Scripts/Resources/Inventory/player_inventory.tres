@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="InventoryData" load_steps=2 format=3 uid="uid://ywyxgrms4ipy"]
+
+[ext_resource type="Script" uid="uid://boi0k2w2acchx" path="res://Scripts/inventory_data.gd" id="1_2da1a"]
+
+[resource]
+script = ExtResource("1_2da1a")
+inventory_size = 50
